@@ -1,19 +1,19 @@
-import { Card } from "../data";
+import { CardContent } from "../data";
 
 export class BoardController {
-  cards: Card[];
-  selected: Card[];
-  match: Card[];
+  cards: CardContent[];
+  selected: CardContent[];
+  match: CardContent[];
   index: string[];
 
-  constructor(initialValue: Card[]) {
+  constructor(initialValue: CardContent[]) {
     this.cards = initialValue;
     this.selected = [];
     this.match = [];
     this.index = [];
   }
 
-  setMatch(card: Card) {
+  updateMatch(card: CardContent) {
     this.match.push(card);
   }
 
@@ -25,7 +25,18 @@ export class BoardController {
     return this.selected;
   }
 
-  updateSelectedCards(card: Card) {
+  canCheck() {
+    return this.selected.length === 2;
+  }
+
+  isMatch() {
+    const [firstSelected, secondSelected] = this.selectedCards();
+    const [firstIndex, secondIndex] = this.selectedIndexes();
+
+    return firstSelected === secondSelected && firstIndex !== secondIndex;
+  }
+
+  updateSelectedCards(card: CardContent) {
     this.selected.push(card);
   }
 
