@@ -1,24 +1,27 @@
+import JSConfetti from "js-confetti";
 import { CardContent } from "../data";
 
 export class BoardController {
   cards: CardContent[];
   selected: CardContent[];
-  match: CardContent[];
+  match: number;
   index: string[];
+  jsConfetti: JSConfetti;
 
-  constructor(initialValue: CardContent[]) {
+  constructor(initialValue: CardContent[], jsConfetti: JSConfetti) {
     this.cards = initialValue;
     this.selected = [];
-    this.match = [];
+    this.match = 0;
     this.index = [];
+    this.jsConfetti = jsConfetti;
   }
 
-  updateMatch(card: CardContent) {
-    this.match.push(card);
+  updateMatch() {
+    this.match++;
   }
 
-  hasMatch() {
-    return this.cards.length / 2 === this.match.length;
+  isFullMatch() {
+    return this.cards.length / 2 === this.match;
   }
 
   selectedCards() {
@@ -54,5 +57,29 @@ export class BoardController {
 
   resetSelectedIndex() {
     this.index.length = 0;
+  }
+
+  checkMatch(card1: HTMLInputElement, card2: HTMLInputElement) {
+    if (this.isMatch()) {
+      this.updateMatch();
+    } else {
+      card1.classList.remove("card--visible");
+      card1.classList.add("card--hidden");
+
+      card2.classList.remove("card--visible");
+      card2.classList.add("card--hidden");
+    }
+
+    this.resetSelectedCards();
+    this.resetSelectedIndex();
+
+    if (this.isFullMatch()) {
+      this.jsConfetti.addConfetti();
+    }
+  }
+  checkBoard(card1: HTMLInputElement, card2: HTMLInputElement) {
+    if (this.canCheck()) {
+      setTimeout(() => this.checkMatch(card1, card2), 500);
+    }
   }
 }

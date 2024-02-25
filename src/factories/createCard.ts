@@ -1,26 +1,6 @@
-import { Card } from "../data";
-import { BoardController } from "../state";
-
-export interface CardUpdatedEventData {
-  selectedIndex: string;
-}
-
-const updateSelectedCardEventFactory = ({
-  selectedIndex,
-}: {
-  selectedIndex: string;
-}) => {
-  const updateSelectedCardEvent = new CustomEvent<CardUpdatedEventData>(
-    "custom::card::updated",
-    {
-      bubbles: true,
-      cancelable: true,
-      detail: { selectedIndex },
-    } as CustomEventInit
-  );
-
-  return updateSelectedCardEvent;
-};
+import { CardContent } from "../data";
+import { BoardController } from "../entities";
+import { updateSelectedCardEventFactory } from "../events";
 
 function flipCard(
   element: HTMLInputElement,
@@ -29,9 +9,7 @@ function flipCard(
 ) {
   const selectedIndex = element.dataset.id as string;
 
-  const updateSelectedCardEvent = updateSelectedCardEventFactory({
-    selectedIndex,
-  });
+  const updateSelectedCardEvent = updateSelectedCardEventFactory();
 
   element.textContent = cardContent;
   element.classList.remove("card--hidden");
@@ -44,7 +22,7 @@ function flipCard(
 }
 
 export const createCard = function (
-  content: Card,
+  content: CardContent,
   index: number,
   cardsManager: BoardController
 ): HTMLDivElement {
