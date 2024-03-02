@@ -1,6 +1,6 @@
-export type Card = string;
+export type CardContent = string;
 
-export const animals: Card[] = [
+export const animals: CardContent[] = [
   "lion",
   "tiger",
   "crocodile",
