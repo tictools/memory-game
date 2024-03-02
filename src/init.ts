@@ -1,12 +1,12 @@
 import { BoardController } from "./entities";
 import { selectElementByDataId } from "./selectors";
 
-export const init = (board: BoardController) => {
+export const init = (boardController: BoardController) => {
   parent.addEventListener("custom::card::updated", () => {
-    const [firstIndex, secondIndex] = board.selectedIndexes();
+    const [firstIndex, secondIndex] = boardController.selectedIndexes();
     const card1 = selectElementByDataId(firstIndex);
     const card2 = selectElementByDataId(secondIndex);
 
-    board.checkBoard(card1, card2);
+    boardController.checkBoard(card1, card2);
   });
 };

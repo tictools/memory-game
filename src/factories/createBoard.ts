@@ -5,13 +5,13 @@ import { createCard } from "./createCard";
 export const createBoard = (
   parent: HTMLDivElement,
   elementsCollection: CardContent[],
-  board: BoardController
+  boardController: BoardController
 ) => {
   const grid = document.createElement("div");
   grid.classList.add("grid");
 
   elementsCollection.forEach((element, index) => {
-    const card = createCard(element, index, board);
+    const card = createCard(element, index, boardController);
     grid.appendChild(card);
   });
 

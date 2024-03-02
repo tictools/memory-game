@@ -4,7 +4,7 @@ import { updateSelectedCardEventFactory } from "../../events";
 export function flipCard(
   element: HTMLInputElement,
   cardContent: string,
-  cardsManager: BoardController
+  boardController: BoardController
 ) {
   const selectedIndex = element.dataset.id as string;
 
@@ -14,8 +14,8 @@ export function flipCard(
   element.classList.remove("card--hidden");
   element.classList.add("card--visible");
 
-  cardsManager.updateSelectedCards(cardContent);
-  cardsManager.updateSelectedIndexes(selectedIndex);
+  boardController.updateSelectedCards(cardContent);
+  boardController.updateSelectedIndexes(selectedIndex);
 
   element.dispatchEvent(updateSelectedCardEvent);
 }
