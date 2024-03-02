@@ -1,17 +1,12 @@
-import JSConfetti from "js-confetti";
-
 import { CardContent } from "../data";
 import { BoardController } from "../entities";
-import { selectElementByDataId } from "../selectors";
 import { createCard } from "./createCard";
 
 export const createBoard = (
   parent: HTMLDivElement,
-  elementsCollection: CardContent[]
+  elementsCollection: CardContent[],
+  board: BoardController
 ) => {
-  const jsConfetti = new JSConfetti();
-  const board = new BoardController(elementsCollection, jsConfetti);
-
   const grid = document.createElement("div");
   grid.classList.add("grid");
 
@@ -21,12 +16,4 @@ export const createBoard = (
   });
 
   parent.appendChild(grid);
-
-  parent.addEventListener("custom::card::updated", () => {
-    const [firstIndex, secondIndex] = board.selectedIndexes();
-    const card1 = selectElementByDataId(firstIndex);
-    const card2 = selectElementByDataId(secondIndex);
-
-    board.checkBoard(card1, card2);
-  });
 };
