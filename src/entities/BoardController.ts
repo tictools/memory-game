@@ -77,6 +77,7 @@ export class BoardController {
       this.jsConfetti.addConfetti();
     }
   }
+
   checkBoard(card1: HTMLInputElement, card2: HTMLInputElement) {
     if (this.canCheck()) {
       setTimeout(() => this.checkMatch(card1, card2), 500);

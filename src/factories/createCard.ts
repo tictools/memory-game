@@ -1,30 +1,11 @@
 import { CardContent } from "../data";
 import { BoardController } from "../entities";
-import { updateSelectedCardEventFactory } from "../events";
-
-function flipCard(
-  element: HTMLInputElement,
-  cardContent: string,
-  cardsManager: BoardController
-) {
-  const selectedIndex = element.dataset.id as string;
-
-  const updateSelectedCardEvent = updateSelectedCardEventFactory();
-
-  element.textContent = cardContent;
-  element.classList.remove("card--hidden");
-  element.classList.add("card--visible");
-
-  cardsManager.updateSelectedCards(cardContent);
-  cardsManager.updateSelectedIndexes(selectedIndex);
-
-  element.dispatchEvent(updateSelectedCardEvent);
-}
+import { flipCard } from "./helpers";
 
 export const createCard = function (
   content: CardContent,
   index: number,
-  cardsManager: BoardController
+  boardController: BoardController
 ): HTMLDivElement {
   const card = document.createElement("div");
   card.textContent = "";
@@ -33,7 +14,12 @@ export const createCard = function (
 
   card.addEventListener("click", (event: MouseEvent) => {
     const targetElement = event.target as HTMLInputElement;
-    flipCard(targetElement, content, cardsManager);
+
+    if (boardController.canCheck()) {
+      return;
+    } else {
+      flipCard(targetElement, content, boardController);
+    }
   });
 
   return card;
