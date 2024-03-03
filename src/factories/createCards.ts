@@ -2,7 +2,7 @@ import { CardContent } from "../data";
 import { BoardController } from "../entities";
 import { createCard } from "./createCard";
 
-export const createBoard = (
+export const createCards = (
   parent: HTMLDivElement,
   elementsCollection: CardContent[],
   boardController: BoardController

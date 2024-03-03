@@ -1,2 +1,2 @@
-export { createBoard } from "./createBoard";
+export { createCards } from "./createCards";
 export { createMainHeading } from "./createMainHeading";

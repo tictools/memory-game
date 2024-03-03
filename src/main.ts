@@ -2,7 +2,7 @@ import JSConfetti from "js-confetti";
 
 import { animals } from "./data";
 import { BoardController } from "./entities";
-import { createBoard, createMainHeading } from "./factories";
+import { createCards, createMainHeading } from "./factories";
 import { sortCards } from "./helpers";
 import { init } from "./init";
 import { selectElementById } from "./selectors";
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const board = new BoardController(cardsCollection, jsConfetti);
 
   createMainHeading(app!); // '!' asserts that 'app' is not null or undefined
-  createBoard(app!, cardsCollection, board);
+  createCards(app!, cardsCollection, board);
 
   init(board);
 });
