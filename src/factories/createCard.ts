@@ -5,7 +5,7 @@ import { flipCard } from "./helpers";
 export const createCard = function (
   content: CardContent,
   index: number,
-  cardsManager: BoardController
+  boardController: BoardController
 ): HTMLDivElement {
   const card = document.createElement("div");
   card.textContent = "";
@@ -14,7 +14,12 @@ export const createCard = function (
 
   card.addEventListener("click", (event: MouseEvent) => {
     const targetElement = event.target as HTMLInputElement;
-    flipCard(targetElement, content, cardsManager);
+
+    if (boardController.canCheck()) {
+      return;
+    } else {
+      flipCard(targetElement, content, boardController);
+    }
   });
 
   return card;
