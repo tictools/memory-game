@@ -1,7 +1,39 @@
 import JSConfetti from "js-confetti";
 import { CardContent } from "../data";
 
-export class BoardController {
+interface BoardControllerInterface {
+  cards: CardContent[];
+  selected: CardContent[];
+  match: number;
+  index: string[];
+  jsConfetti: JSConfetti;
+
+  updateMatch(): void;
+
+  isFullMatch(): boolean;
+
+  selectedCards(): CardContent[];
+
+  canCheck(): boolean;
+
+  isMatch(): boolean;
+
+  updateSelectedCards(card: CardContent): void;
+
+  resetSelectedCards(): void;
+
+  selectedIndexes(): string[];
+
+  updateSelectedIndexes(index: string): void;
+
+  resetSelectedIndex(): void;
+
+  checkMatch(card1: HTMLInputElement, card2: HTMLInputElement): void;
+
+  checkBoard(card1: HTMLInputElement, card2: HTMLInputElement): void;
+}
+
+export class BoardController implements BoardControllerInterface {
   cards: CardContent[];
   selected: CardContent[];
   match: number;
