@@ -32,6 +32,11 @@ h1 {
 }
 
 #app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -79,4 +84,24 @@ h1 {
     color: #213547;
     background-color: #ffffff;
   }
+}
+
+/* OOP */
+.memory-card {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.card-inner {
+  display: none;
+}
+
+.memory-card.flipped .card-inner {
+  display: block;
 }

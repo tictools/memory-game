@@ -1,12 +1,12 @@
-export type CardContent = string;
+type CardContent = string;
 
 export const animals: CardContent[] = [
   "lion",
   "tiger",
-  "crocodile",
-  "giraffe",
-  "elephant",
-  "cheetah",
-  "rhino",
-  "monkey",
+  // "crocodile",
+  // "giraffe",
+  // "elephant",
+  // "cheetah",
+  // "rhino",
+  // "monkey",
 ];

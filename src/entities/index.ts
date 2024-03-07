@@ -1,1 +1,2 @@
-export { BoardController } from "./BoardController";
+export { MemoryGame } from "./MemoryGame";
+export { MemoryGameUI } from "./MemoryGameUI";
