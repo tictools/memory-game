@@ -38,7 +38,7 @@ h1 {
   text-align: center;
 }
 
-.grid {
+.memory-board {
   display: grid;
   grid-template-columns: repeat(4, auto);
   gap: 0.5rem;

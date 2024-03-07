@@ -6,7 +6,7 @@ import { sortCards } from "./helpers";
 import { init } from "./init";
 import { selectElementById } from "./selectors";
 
-import "./style.css";
+import "./styles.css";
 
 const cardsCollection = sortCards([...animals, ...animals]);
 

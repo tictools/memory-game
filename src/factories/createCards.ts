@@ -8,7 +8,7 @@ export const createCards = (
   boardController: BoardController
 ) => {
   const grid = document.createElement("div");
-  grid.classList.add("grid");
+  grid.classList.add("memory-board");
 
   elementsCollection.forEach((element, index) => {
     const card = createCard(element, index, boardController);
