@@ -45,7 +45,9 @@ export class MemoryGameUI implements GameUI {
       this.render();
     }
   }
-  private debounceRenderAndCheck(ms: number) {
+  private renderAndDebounceCheck(ms: number) {
+    this.render();
+
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.game.check());
@@ -53,11 +55,10 @@ export class MemoryGameUI implements GameUI {
     });
   }
 
-
-  debounceRender(){
-  this.debounceRenderAndCheck(500).then((isGameComplete) => {
-    this.render();
-    isGameComplete && this.confetti.addConfetti();
-  });
+  debounceRender() {
+    this.renderAndDebounceCheck(1500).then((isGameComplete) => {
+      this.render();
+      isGameComplete && this.confetti.addConfetti();
+    });
   }
 }
