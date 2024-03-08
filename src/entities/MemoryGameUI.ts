@@ -2,6 +2,7 @@ import JSConfetti from "js-confetti";
 import type { Game, GameUI } from "./types";
 
 export class MemoryGameUI implements GameUI {
+  private DELAY: number = 500;
   private game: Game;
   private boardElement: HTMLDivElement;
   private containerElement: HTMLElement;
@@ -38,12 +39,22 @@ export class MemoryGameUI implements GameUI {
 
   private handleCardClick(cardId: number): void {
     this.game.flipCard(cardId);
+    this.handleRender();
+  }
 
+  private handleRender() {
     if (this.game.canCheck()) {
       this.debounceRender();
     } else {
       this.render();
     }
+  }
+
+  debounceRender() {
+    this.renderAndDebounceCheck(this.DELAY).then((isGameComplete) => {
+      this.render();
+      isGameComplete && this.confetti.addConfetti();
+    });
   }
   private renderAndDebounceCheck(ms: number) {
     this.render();
@@ -52,13 +63,6 @@ export class MemoryGameUI implements GameUI {
       setTimeout(() => {
         resolve(this.game.check());
       }, ms);
-    });
-  }
-
-  debounceRender() {
-    this.renderAndDebounceCheck(1500).then((isGameComplete) => {
-      this.render();
-      isGameComplete && this.confetti.addConfetti();
     });
   }
 }
