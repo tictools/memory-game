@@ -3,65 +3,71 @@ import type { Game, GameUI } from "./types";
 
 export class MemoryGameUI implements GameUI {
   private DELAY: number = 500;
-  private game: Game;
-  private boardElement: HTMLDivElement;
-  private containerElement: HTMLElement;
-  private confetti: JSConfetti;
+  private _game: Game;
+  private _boardElement: HTMLDivElement;
+  private _containerElement: HTMLElement;
+  private _confetti: JSConfetti;
 
   constructor(
     game: Game,
     containerElement: HTMLElement,
     jsConfetti: JSConfetti
   ) {
-    this.confetti = jsConfetti;
-    this.game = game;
-    this.containerElement = containerElement;
-    this.boardElement = document.createElement("div");
-    this.boardElement.classList.add("memory-board");
-    this.containerElement.appendChild(this.boardElement);
+    this._confetti = jsConfetti;
+    this._game = game;
+    this._containerElement = containerElement;
+
+    this._boardElement = document.createElement("div");
+    this.initiliazeBoardElement();
   }
 
   render(): void {
-    this.boardElement.innerHTML = "";
+    this._boardElement.innerHTML = "";
 
-    this.game.cards.forEach((card) => {
+    this._game.cards.forEach((card) => {
       const cardElement = card.createHTMLElement();
 
       cardElement.addEventListener("click", () => {
-        if (this.game.canCheck()) return;
+        if (this._game.canCheck()) return;
 
         this.handleCardClick(card.id);
       });
 
-      this.boardElement.appendChild(cardElement);
+      this._boardElement.appendChild(cardElement);
     });
-  }
-
-  private handleCardClick(cardId: number): void {
-    this.game.flipCard(cardId);
-    this.handleRender();
-  }
-
-  private handleRender() {
-    if (this.game.canCheck()) {
-      this.debounceRender();
-    } else {
-      this.render();
-    }
   }
 
   debounceRender() {
     this.renderAndDebounceCheck(this.DELAY).then((isGameComplete) => {
       this.render();
-      isGameComplete && this.confetti.addConfetti();
+      isGameComplete && this._confetti.addConfetti();
     });
   }
+
+  private initiliazeBoardElement() {
+    this._boardElement.classList.add("memory-board");
+    this._containerElement.appendChild(this._boardElement);
+  }
+
+  private handleCardClick(cardId: number): void {
+    this._game.flipCard(cardId);
+    this.handleRender();
+  }
+
+  private handleRender() {
+    if (this._game.canCheck()) {
+      this.debounceRender();
+    } else {
+      this.render();
+    }
+  }
+  
   private renderAndDebounceCheck(ms: number) {
     this.render();
 
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(this.game.check());
+        resolve(this._game.check());
       }, ms);
     });
   }
