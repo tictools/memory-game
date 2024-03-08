@@ -11,6 +11,7 @@ export interface Game {
   flipCard(cardId: number): void;
   check(): boolean;
   canCheck(): boolean;
+  reset(): void;
 }
 
 export interface GameUI {
