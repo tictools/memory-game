@@ -14,16 +14,6 @@ export class MemoryGame implements Game {
     this.initializeGame();
   }
 
-  private initializeGame(): void {
-    this.createDeck();
-    this.cards = this._deck.map((value, index) => new MemoryCard(index, value));
-  }
-
-  private createDeck(): void {
-    const fullDeck = [...this._originalValues, ...this._originalValues];
-    this._deck = fullDeck.sort(() => 0.5 - Math.random());
-  }
-
   flipCard(cardId: number): void {
     const selectedCard = this.cards[cardId];
     this.cards[cardId].toggleFlippedStatus();
@@ -49,12 +39,27 @@ export class MemoryGame implements Game {
     return this.isGameComplete();
   }
 
+  reset(): void {
+    this.initializeGame();
+  }
+
+  private initializeGame(): void {
+    this.flushFlippedCards();
+    this.createDeck();
+    this.cards = this._deck.map((value, index) => new MemoryCard(index, value));
+  }
+
+  private createDeck(): void {
+    const fullDeck = [...this._originalValues, ...this._originalValues];
+    this._deck = fullDeck.sort(() => 0.5 - Math.random());
+  }
+
   private addToFlippedCards(selectedCard: Card) {
     const { id, value } = this.flippedCardData(selectedCard);
     this._flippedCards.push({ id, value });
   }
 
-  private flippedCardData(selectedCard: Card) {
+  private flippedCardData(selectedCard: Card): FlippedCardData {
     return {
       id: selectedCard.id,
       value: selectedCard.value,

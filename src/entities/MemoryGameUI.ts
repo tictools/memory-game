@@ -5,6 +5,7 @@ export class MemoryGameUI implements GameUI {
   private DELAY: number = 500;
   private _game: Game;
   private _boardElement: HTMLDivElement;
+  private _resetButton: HTMLButtonElement;
   private _containerElement: HTMLElement;
   private _confetti: JSConfetti;
 
@@ -19,6 +20,9 @@ export class MemoryGameUI implements GameUI {
 
     this._boardElement = document.createElement("div");
     this.initiliazeBoardElement();
+
+    this._resetButton = document.createElement("button");
+    this.initiliazeResetButtonElement();
   }
 
   render(): void {
@@ -49,9 +53,24 @@ export class MemoryGameUI implements GameUI {
     this._containerElement.appendChild(this._boardElement);
   }
 
+  private initiliazeResetButtonElement() {
+    this._resetButton.textContent = "reset";
+    this._resetButton.classList.add("button-reset");
+    this._containerElement.appendChild(this._resetButton);
+
+    this._resetButton.addEventListener("click", () =>
+      this.handleResetButtonClick()
+    );
+  }
+
   private handleCardClick(cardId: number): void {
     this._game.flipCard(cardId);
     this.handleRender();
+  }
+
+  private handleResetButtonClick() {
+    this._game.reset();
+    this.render();
   }
 
   private handleRender() {
@@ -61,7 +80,7 @@ export class MemoryGameUI implements GameUI {
       this.render();
     }
   }
-  
+
   private renderAndDebounceCheck(ms: number) {
     this.render();
 
