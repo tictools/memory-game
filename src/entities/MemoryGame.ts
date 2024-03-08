@@ -1,8 +1,8 @@
 import { MemoryCard } from "./MemoryCard";
-import type { Card, Game } from "./types";
+import type { Card, FlippedCardData, Game } from "./types";
 
 export class MemoryGame implements Game {
-  private _flippedCards: Card[] = [];
+  private _flippedCards: FlippedCardData[] = [];
   private _originalValues: string[] = [];
   private _deck: string[] = [];
 
@@ -50,8 +50,15 @@ export class MemoryGame implements Game {
   }
 
   private addToFlippedCards(selectedCard: Card) {
-    //TODO: extract only required data (value and id) to respect ISP
-    this._flippedCards.push(selectedCard);
+    const { id, value } = this.flippedCardData(selectedCard);
+    this._flippedCards.push({ id, value });
+  }
+
+  private flippedCardData(selectedCard: Card) {
+    return {
+      id: selectedCard.id,
+      value: selectedCard.value,
+    };
   }
 
   private flushFlippedCards() {
@@ -76,8 +83,8 @@ export class MemoryGame implements Game {
   }
 
   private get flippedCards(): {
-    firstSelected: Card;
-    secondSelected: Card;
+    firstSelected: FlippedCardData;
+    secondSelected: FlippedCardData;
   } {
     const [firstSelected, secondSelected] = this._flippedCards;
     return { firstSelected, secondSelected };

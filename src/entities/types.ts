@@ -16,3 +16,8 @@ export interface Game {
 export interface GameUI {
   render(): void;
 }
+
+export type FlippedCardData = {
+  id: number;
+  value: string;
+};
