@@ -1,7 +1,6 @@
 export interface Card {
-  id: number;
-  isFlipped: boolean;
-  value: string;
+  get id(): number;
+  get value(): string;
   toggleFlippedStatus(): void;
   createHTMLElement(): HTMLDivElement;
 }
@@ -12,8 +11,6 @@ export interface Game {
   flipCard(cardId: number): void;
   check(): boolean;
   canCheck(): boolean;
-  // updateMatch(): void;
-  // isGameComplete(): boolean;
 }
 
 export interface GameUI {
