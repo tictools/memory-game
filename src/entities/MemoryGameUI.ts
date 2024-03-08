@@ -39,11 +39,6 @@ export class MemoryGameUI implements GameUI {
 
       this._boardElement.appendChild(cardElement);
     });
-
-    this._resetButton.addEventListener("click", () => {
-      this._game.reset();
-      this.render();
-    });
   }
 
   debounceRender() {
@@ -60,13 +55,22 @@ export class MemoryGameUI implements GameUI {
 
   private initiliazeResetButtonElement() {
     this._resetButton.textContent = "reset";
-    this._resetButton.classList.add("button", "button--reset");
+    this._resetButton.classList.add("button-reset");
     this._containerElement.appendChild(this._resetButton);
+
+    this._resetButton.addEventListener("click", () =>
+      this.handleResetButtonClick()
+    );
   }
 
   private handleCardClick(cardId: number): void {
     this._game.flipCard(cardId);
     this.handleRender();
+  }
+
+  private handleResetButtonClick() {
+    this._game.reset();
+    this.render();
   }
 
   private handleRender() {

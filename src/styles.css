@@ -98,10 +98,16 @@ h1 {
   cursor: pointer;
 }
 
-.card-inner {
-  display: none;
+.button-reset {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 400;
+  text-transform: upperCase;
 }
 
-.memory-card.flipped .card-inner {
-  display: block;
+.button-reset:hover {
+  cursor: pointer;
+  background-color: red;
+  font-weight: 600;
 }
