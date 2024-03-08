@@ -2,54 +2,46 @@ import { MemoryCard } from "./MemoryCard";
 import type { Card, Game } from "./types";
 
 export class MemoryGame implements Game {
-  private flippedCards: Card[] = [];
-  private originalValues: string[] = [];
-  private deck: string[] = [];
+  private _flippedCards: Card[] = [];
+  private _originalValues: string[] = [];
+  private _deck: string[] = [];
+
   cards: Card[] = [];
   match: number = 0;
 
   constructor(initialValues: string[]) {
-    this.originalValues = initialValues;
+    this._originalValues = initialValues;
     this.initializeGame();
   }
 
   private initializeGame(): void {
     this.createDeck();
-    this.cards = this.deck.map((value, index) => new MemoryCard(index, value));
+    this.cards = this._deck.map((value, index) => new MemoryCard(index, value));
   }
 
   private createDeck(): void {
-    const fullDeck = [...this.originalValues, ...this.originalValues];
-    this.deck = fullDeck.sort(() => 0.5 - Math.random());
+    const fullDeck = [...this._originalValues, ...this._originalValues];
+    this._deck = fullDeck.sort(() => 0.5 - Math.random());
   }
 
   flipCard(cardId: number): void {
-    // Implement card flipping logic
-    // Update the isFlipped property of the selected card
-    // Handle logic for tracking flipped cards and checking for matches
     const selectedCard = this.cards[cardId];
     this.cards[cardId].toggleFlippedStatus();
     this.addToFlippedCards(selectedCard);
   }
 
   canCheck(): boolean {
-    return this.flippedCards.length === 2;
+    return this._flippedCards.length === 2;
   }
 
   check(): boolean {
     if (this.isMatch()) {
-      debugger;
       this.updateMatch();
     } else {
-      debugger;
-      const { firstSelected, secondSelected } = this.getFlippedCards();
+      const { firstSelected, secondSelected } = this.flippedCards;
 
       this.cards[firstSelected.id].toggleFlippedStatus();
       this.cards[secondSelected.id].toggleFlippedStatus();
-    }
-
-    if (this.isGameComplete()) {
-      console.log("COMPLETE!");
     }
 
     this.flushFlippedCards();
@@ -58,16 +50,16 @@ export class MemoryGame implements Game {
   }
 
   private addToFlippedCards(selectedCard: Card) {
-    this.flippedCards.push(selectedCard);
+    //TODO: extract only required data (value and id) to respect ISP
+    this._flippedCards.push(selectedCard);
   }
 
   private flushFlippedCards() {
-    this.flippedCards.length = 0;
+    this._flippedCards.length = 0;
   }
 
   private isMatch(): boolean {
     const { isSameContent, isSameIndex } = this.getMatchStatus();
-
     return isSameContent && !isSameIndex;
   }
 
@@ -75,7 +67,7 @@ export class MemoryGame implements Game {
     isSameContent: boolean;
     isSameIndex: boolean;
   } {
-    const { firstSelected, secondSelected } = this.getFlippedCards();
+    const { firstSelected, secondSelected } = this.flippedCards;
 
     const isSameContent = firstSelected.value === secondSelected.value;
     const isSameIndex = firstSelected.id === secondSelected.id;
@@ -83,11 +75,11 @@ export class MemoryGame implements Game {
     return { isSameContent, isSameIndex };
   }
 
-  private getFlippedCards(): {
+  private get flippedCards(): {
     firstSelected: Card;
     secondSelected: Card;
   } {
-    const [firstSelected, secondSelected] = this.flippedCards;
+    const [firstSelected, secondSelected] = this._flippedCards;
     return { firstSelected, secondSelected };
   }
 
