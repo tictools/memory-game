@@ -1,20 +1,17 @@
 import JSConfetti from "js-confetti";
 
 import { animals } from "./data";
-import { BoardController } from "./entities";
-import { sortCards } from "./helpers";
-import { init } from "./init";
+import { MemoryGame, MemoryGameUI } from "./entities";
 import { selectElementById } from "./selectors";
 
-import "./style.css";
-
-const cardsCollection = sortCards([...animals, ...animals]);
+import "./styles.css";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = selectElementById("#app"); // '!' assert not null
 
   const jsConfetti = new JSConfetti();
-  const board = new BoardController(cardsCollection, jsConfetti);
+  const memoryGame = new MemoryGame(animals);
+  const memoryGameUI = new MemoryGameUI(memoryGame, app!, jsConfetti);
 
-  init(app!, cardsCollection, board);
+  memoryGameUI.render();
 });

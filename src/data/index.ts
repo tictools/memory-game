@@ -1,4 +1,4 @@
-export type CardContent = string;
+type CardContent = string;
 
 export const animals: CardContent[] = [
   "lion",
